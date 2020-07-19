@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require("mongoose");
+var ejs = require('ejs');
 
 var deviceRouter = require('./routes/device');
 var usersRouter = require('./routes/users');
@@ -12,9 +13,10 @@ var app = express();
 process.env.JWT_KEY = "secret key";
 process.env.mongoPwd = "sharad123";
 
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -27,7 +29,6 @@ mongoose.connect(
     "mongodb+srv://sharad:"+ process.env.mongoPwd + "@smitch.gnisy.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use((req, res, next) => {
-  console.log("hit");
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -41,7 +42,7 @@ app.use((req, res, next) => {
 });
 
 
-app.use('/users', usersRouter);
+app.use('/', usersRouter);
 app.use('/device', deviceRouter);
 
 // catch 404 and forward to error handler

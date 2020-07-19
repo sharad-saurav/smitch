@@ -4,6 +4,18 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../model/user");
+var ejs = require('ejs');
+
+
+
+
+router.get('/', function(req, res) {
+  res.render('login', {});
+});
+
+router.get('/signup-render', function(req, res) {
+  res.render('signup',{});
+});
 
 router.post("/signup", (req, res, next) => {
   User.find({ email: req.body.email })
